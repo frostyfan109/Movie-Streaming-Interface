@@ -1,0 +1,245 @@
+.title-block {
+  pointer-events: none;
+}
+
+.result-navbar > *.btn {
+  margin-top: 0 !important;
+}
+.MovieResults .movie-result-container {
+  display: grid;
+  grid-column-gap: .75rem;
+  grid-row-gap: .75rem;
+
+}
+@media (max-width: 575.98px) {
+  .MovieResults .movie-result-container {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+  .movie-result.card[data-available="true"][data-hover="true"] {
+    /* Tone down the scale a bit so that phone users can read the description more easily */
+    transform: scale(1.1) !important;
+  }
+}
+@media (min-width: 576px) {
+  .MovieResults .movie-result-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 768px) {
+  .MovieResults .movie-result-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 992px) {
+  .MovieResults .movie-result-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .MovieResults .movie-result-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.movie-result.card {
+  transition: transform .75s ease;
+}
+
+.MovieResults .col:first-child {
+  padding-left: 0;
+}
+.MovieResults .col:last-child {
+  padding-right: 0;
+}
+
+.movie-result.card[data-available="true"][data-hover="true"] {
+  /* z-index:1; */
+  transform: scale(1.25);
+  /* position: absolute; */
+}
+.movie-result > .card-img-container {
+  position: relative;
+}
+.movie-result[data-available="false"] > .card-img-container > .img-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.movie-result[data-overlay="true"] > .card-img-container > .img-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* .movie-result[data-available="false"] > .card-img-container > .img-overlay::after {
+  transition: opacity .75s ease;
+  content: 'Unavailable';
+  font-weight: 500;
+  font-size: 1.25rem;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  opacity: 0;
+  color: var(--danger);
+  bottom: 0;
+}
+.movie-result[data-available="false"] > .card-img-container > .img-overlay::after {
+  opacity: 1;
+} */
+.movie-result > .card-img-container > .img-overlay > .fa-layers {
+  position: relative;
+  background-color: red;
+}
+.movie-result[data-available="false"] > .card-img-container > .img-overlay > .fa-layers {
+  display: none;
+}
+.movie-result > .card-img-container > .img-overlay > .fa-layers > svg {
+  /* transition: width .75s ease, height .75s ease; */
+  font-size: 0px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* display: none; */
+}
+.movie-result > .card-img-container > .img-overlay > .fa-layers > .play {
+  left: calc(50% + 1.25px);
+  color: white;
+  filter: brightness(.925);
+}
+.movie-result > .card-img-container > .img-overlay > .fa-layers > .circle {
+  color: var(--primary);
+  filter: brightness(.925);
+}
+.movie-result > .card-img-container > .img-overlay {
+  transition: background-color .3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-img-container > .img-overlay {
+  /* background-color: rgba(0, 0, 0, 0.4); */
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-img-container > .img-overlay > .fa-layers > .play {
+  font-size: .8em;
+  /* display: initial; */
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-img-container > .img-overlay > .fa-layers > .circle {
+  font-size: 1.75em;
+}
+.movie-result[data-available="false"] > .card-body {
+  background: inherit;
+  filter: brightness(50%);
+}
+.movie-result > .card-body > .card-title {
+  font-size: 1rem !important;
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-body > .card-title {
+  /* font-size: 1rem; */
+  margin-bottom: 0;
+}
+.movie-result > .card-body {
+  background: transparent;
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-body {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.movie-result > .card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: inherit;
+  border-radius: inherit;
+  left: -1px;
+  top: calc(100% - 2px);
+  height: 0px;
+  font-size: .7rem;
+  width: calc(100% - 1rem);
+  box-sizing: content-box;
+}
+.movie-result[data-available="false"] > .card-text {
+  filter: brightness(50%);
+}
+.movie-result[data-available="true"][data-hover="true"] > .card-text {
+  height: auto;
+  border: inherit;
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: 1rem .5rem;
+  padding-top: 0;
+}
+
+.genre-card {
+  flex-grow: 1;
+}
+.miscellaneous-card {
+}
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: .45rem;
+  grid-row-gap: .45rem;
+}
+.filter-form > .form-group {
+  display: flex;
+  align-items: flex-start;
+}
+.filter-form > .form-group > *:not(:last-child) {
+  margin-right: 1rem;
+}
+.show-unavailable-movies-checkbox > label {
+  white-space: nowrap;
+}
+@media (max-width: 575.98px) {
+  .genre-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-form > .form-group {
+    flex-direction: column;
+  }
+  .filter-form > .form-group > * {
+    width: 100%;
+  }
+  .filter-form > .form-group > *:not(:last-child) {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .page-item-prev, .page-item-next {
+    display: none;
+  }
+}
+@media (min-width: 576px) {
+  .genre-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 768px) {
+  .genre-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 992px) {
+  .genre-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .genre-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+.filter-form .card-body > .form-group > .form-check {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+}
+.filter-form .card-body input {
+  margin: 0 !important;
+  margin-right: 0.5rem !important;
+  position: static;
+}
+.filter-form .card-body label {
+  width: max-content;
+}

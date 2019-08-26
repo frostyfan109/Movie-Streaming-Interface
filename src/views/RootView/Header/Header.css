@@ -1,0 +1,19 @@
+.Header {
+  margin: 0 auto;
+  min-width: min-content;
+}
+.Header-Container {
+  z-index: 6000 !important;
+}
+
+.fetch-index-servers-retry-button {
+  border: none;
+  transition: none !important;
+}
+
+@media (max-width: 767.98px) {
+  .header-navbar-nav > .form-inline {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}

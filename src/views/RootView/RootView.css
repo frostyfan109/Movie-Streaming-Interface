@@ -1,0 +1,21 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.main-content {
+  flex-grow: 1;
+}
+.main-content > * > * > * {
+  height: 100%;
+}
+
+.padded {
+  padding-left: calc(var(--page-padding) / 2) !important;
+  padding-right: calc(var(--page-padding) / 2) !important;
+}
+.margin-padded {
+  margin-left: calc(var(--page-padding) / 2) !important;
+  margin-right: calc(var(--page-padding) / 2) !important;
+}
