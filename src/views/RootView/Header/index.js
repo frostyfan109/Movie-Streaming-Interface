@@ -36,11 +36,12 @@ class Header extends Component {
     return (
       <div className={
             classNames(
-              "Header-Container sticky-top bg-light",
+              "Header-Container sticky-top",
               this.props.theme === Theme.DARK && "navbar-dark",
               this.props.theme === Theme.LIGHT ? "text-light" : "text-dark",
               "shadow-sm mb-1"
-            )}>
+            )}
+            style={{ backgroundColor : this.props.theme === Theme.LIGHT ? "rgb(255, 255, 255)" : "rgb(0, 0, 0)"}}>
         <Navbar className="Header padded"
                 expand="md"
                 // bg={this.props.theme === Theme.LIGHT ? "light" : "dark"}

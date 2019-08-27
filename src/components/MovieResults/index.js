@@ -35,7 +35,14 @@ class ResultNavbar extends Component {
             )
           })
         }
-        <Col className="pl-0 ml-0"><Button variant="secondary" className="float-right" {...this.props.filterButtonProps} onClick={this.props.toggleFilterView}>{this.props.filterText}</Button></Col>
+        <Col className="pl-0 ml-0">
+          <Button variant="secondary"
+                  className={classNames("float-right", !this.props.filterButton && "d-none")}
+                  onClick={this.props.toggleFilterView}
+                  {...this.props.filterButtonProps}>
+            {this.props.filterText}
+          </Button>
+        </Col>
       </Row>
     );
   }
@@ -98,7 +105,7 @@ export const MovieResult = withRouter(class extends Component {
             }}
             onClick={() => {
               this.props.data.available && this.props.history.push({
-                pathname : `movie/${this.props.data.id}`,
+                pathname : `/movie/${this.props.data.id}`,
                 state : { movie : this.props.data }
               });
             }}
@@ -120,7 +127,7 @@ export const MovieResult = withRouter(class extends Component {
           </div>
         </div>
         <Card.Body className={classNames("py-3 px-2")}>
-          <Card.Title className={classNames("text-center", !this.state.hover && this.props.doHover < Hover.OVERLAY && "mb-0")}>{!this.props.data.available && "(Unavailable) "}{this.props.data.name}</Card.Title>
+          <Card.Title className={classNames("text-center", ((!this.state.hover && this.props.doHover < Hover.OVERLAY) || this.props.doHover >= Hover.OVERLAY) && "mb-0")}>{!this.props.data.available && "(Unavailable) "}{this.props.data.name}</Card.Title>
         </Card.Body>
         <Card.Text className="position-absolute text-center">
           <ReactResizeDetector handleWidth>
@@ -191,6 +198,9 @@ class MovieResults extends Component {
   }
 
   _applyFilters(results) {
+    if (this.props.noFilter) {
+      return results.filter((movieResult) => movieResult.available);
+    }
     return results.filter((movieResult) => {
       return (
         movieResult.genres.every((genre) => {
@@ -234,9 +244,42 @@ class MovieResults extends Component {
       )
     }*/
     return (
-      <div className="MovieResults d-flex flex-column">
+      <div className={classNames("MovieResults d-flex flex-column", this.props.className)}>
+        {
+          this.props.maxRows !== undefined && (
+            <style>
+              {
+                `
+                @media (max-width: 575.98px) {
+                  .MovieResults .movie-result-container > *:nth-of-type(1n + ${(this.props.maxRows * 1) + 1}) {
+                    display: none !important;
+                  }
+                }
+                @media (max-width: 767.98px) {
+                  .MovieResults .movie-result-container > *:nth-of-type(1n + ${(this.props.maxRows * 3) + 1}) {
+                    display: none !important;
+                  }
+                }
+                @media (max-width: 991.98px) {
+                  .MovieResults .movie-result-container > *:nth-of-type(1n + ${(this.props.maxRows * 4) + 1}) {
+                    display: none !important;
+                  }
+                }
+                @media (max-width: 1199.98px) {
+                  .MovieResults .movie-result-container > *:nth-of-type(1n + ${(this.props.maxRows * 5) + 1}) {
+                    display: none !important;
+                  }
+                }
+                .MovieResults .movie-result-container > *:nth-of-type(1n + ${(this.props.maxRows * 6) + 1}) {
+                  display: none !important;
+                }
+                `
+              }
+            </style>
+          )
+        }
         <ResultNavbar tags={this.props.tags}
-                      filterButton={this.props.filterButton}
+                      filterButton={!this.props.noFilter}
                       toggleFilterView={() => this.setState({ filterView : !this.state.filterView})}
                       filterText={this.state.filterView ? "Back" : "Filter"}
                       filterButtonProps={this.props.filterButtonProps}/>

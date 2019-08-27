@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ResultView from '../ResultView';
-import { AbortException } from '../../exception.js';
 import { InputGroup, Form } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import * as classNames from 'classnames';
 import { defaultResults } from '../../redux/reducers/movieResults.js';
+import { AbortException } from '../../exception.js';
 import { Theme } from '../../constants.js';
 import * as API from '../../api';
 

@@ -47,7 +47,7 @@ class RootView extends Component {
 
         <Header/>
 
-        <div className="main-content padded">
+        <div className={classNames("main-content padded", this.props.theme === Theme.LIGHT && "bg-light")}>
           <div className="h-100">
             <div className="py-3 h-100">
               <Routes/>

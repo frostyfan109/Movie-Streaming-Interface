@@ -7,6 +7,8 @@ import Plyr from 'react-plyr';
 import ReactStars from 'react-stars';
 import Loading from '../../components/Loading';
 import * as API from '../../api';
+import MovieResults, { Hover } from '../../components/MovieResults';
+import { AbortException } from '../../exception.js';
 import { Theme } from '../../constants.js';
 import 'plyr/dist/plyr.css';
 import './MovieView.css';
@@ -16,18 +18,56 @@ class MovieView extends Component {
     super(props);
 
     this.state = {
-      movie : null
+      movie : null,
+      similarMovies : null
     };
+
+    this._initialize = this._initialize.bind(this);
+    this._setMovie = this._setMovie.bind(this);
+
+    this.movieCancelToken = API.cancelToken();
+    this.similarMoviesCancelToken = API.cancelToken();
   }
-  componentDidMount() {
+  _setMovie(movie) {
+    this.movieCancelToken.cancel();
+    this.similarMoviesCancelToken.cancel();
+    this.setState({ movie : null, similarMovies : null }, () => {
+      // Force plyr to refresh
+      this.setState({ movie });
+
+      this.similarMoviesCancelToken = API.cancelToken();
+      new API.IndexServer(this.props.indexServer).getSimilarMovies(movie.id, 1, { cancelToken : this.similarMoviesCancelToken.token }).then((movies) => {
+        this.setState({ similarMovies : movies });
+      }).catch((e) => {
+        if (!(e instanceof AbortException)) {
+          throw e;
+        }
+      });
+    });
+  }
+  _initialize() {
     if (this.props.location.state) {
-      this.setState({ movie : this.props.location.state.movie });
+      this._setMovie(this.props.location.state.movie);
     }
     else {
-      new API.IndexServer(this.props.indexServer).getMovieById(this.props.match.params.movieId).then((movie) => {
-        this.setState({ movie });
+      this.movieCancelToken = API.cancelToken();
+      new API.IndexServer(this.props.indexServer, { cancelToken : this.movieCancelToken.token }).getMovieById(this.props.match.params.movieId).then((movie) => {
+        this._setMovie(movie);
       });
     }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.location.state.movie !== prevProps.location.state.movie) {
+      console.log('Initializing');
+      this._initialize();
+    }
+  }
+  componentDidMount() {
+    this._initialize();
+  }
+  componentWillUnmount() {
+    this.movieCancelToken.cancel();
+    this.similarMoviesCancelToken.cancel();
   }
   render() {
     const movie = this.state.movie;
@@ -57,7 +97,7 @@ class MovieView extends Component {
               url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
               ratio="16:9"
               controls={[ 'play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen' ]}
-              poster={movie.poster}/>
+              poster={console.log(movie.poster)||movie.poster}/>
         <Container className="px-0">
           <div className="d-flex align-items-stretch info-container">
             <Container className="pt-4 px-0">
@@ -77,6 +117,11 @@ class MovieView extends Component {
                       }).reduce((prev, cur) => [prev, ', ', cur])}</span>
                     </div>
                 </div>
+                {
+                  this.state.similarMovies != null && this.state.similarMovies.results.length > 0 && (
+                    <MovieResults className="mt-4" tags={["Similar"]} doHover={Hover.OVERLAY} maxRows={1} noFilter={true}>{this.state.similarMovies.results}</MovieResults>
+                  )
+                }
               </Container>
             </Container>
           </div>

@@ -11,6 +11,7 @@
   grid-row-gap: .75rem;
 
 }
+
 @media (max-width: 575.98px) {
   .MovieResults .movie-result-container {
     grid-template-columns: 1fr;

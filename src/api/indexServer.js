@@ -91,11 +91,39 @@ export default class IndexServer {
       IndexServer.handleError(error);
     }
   }
-  async getMovieById(id) {
+  async getMovieById(id, data) {
     try {
       const params = this.makeParams();
-      const response = await axios.get(BASE_API_URL + `/movie/${id}?` + qs.stringify(params));
+      const response = await axios.get(BASE_API_URL + `/movie/${id}?` + qs.stringify(params), data);
       return response.data;
+    }
+    catch (error) {
+      IndexServer.handleError(error);
+    }
+  }
+  async getMovieRecommendations(id, page, data) {
+    try {
+      const params = this.makeParams({
+        page : page,
+        confirm_exists : true
+      });
+      const response = await axios.get(BASE_API_URL + `/movie/${id}/recommended?` + qs.stringify(params), data);
+      const movies = response.data;
+      return await IndexServer.loadMovies(movies);
+    }
+    catch (error) {
+      IndexServer.handleError(error);
+    }
+  }
+  async getSimilarMovies(id, page, data) {
+    try {
+      const params = this.makeParams({
+        page : page,
+        confirm_exists : true
+      });
+      const response = await axios.get(BASE_API_URL + `/movie/${id}/similar?` + qs.stringify(params), data);
+      const movies = response.data;
+      return await IndexServer.loadMovies(movies);
     }
     catch (error) {
       IndexServer.handleError(error);
