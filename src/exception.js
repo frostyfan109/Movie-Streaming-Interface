@@ -14,8 +14,12 @@ class BaseException extends ExtendableError {
 }
 
 export class APIException extends BaseException {
+  constructor(status, message, details = '') {
+    super(message, details);
+    this.status = status;
+  }
   static fromResponse(response) {
-    return new APIException(response.data.message, response.data.details);
+    return new APIException(response.data.status, response.data.message, response.data.details);
   }
 }
 

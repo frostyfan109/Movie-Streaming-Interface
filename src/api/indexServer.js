@@ -54,9 +54,8 @@ export default class IndexServer {
   async getMovies(category, page, data) {
     try {
       const params = this.makeParams({
-        category : category,
-        page : page,
-        confirm_exists : true
+        category,
+        page
       });
       const response = await axios.get(BASE_API_URL + `/movies?` + qs.stringify(params), data);
       const movies = response.data;
@@ -70,8 +69,7 @@ export default class IndexServer {
     if (!query) return await IndexServer.loadMovies([]);
     try {
       const params = this.makeParams({
-        page : page,
-        confirm_exists : true
+        page
       });
       const response = await axios.get(BASE_API_URL + `/search/${query}?` + qs.stringify(params), data);
       const movies = response.data;
@@ -104,8 +102,7 @@ export default class IndexServer {
   async getMovieRecommendations(id, page, data) {
     try {
       const params = this.makeParams({
-        page : page,
-        confirm_exists : true
+        page
       });
       const response = await axios.get(BASE_API_URL + `/movie/${id}/recommended?` + qs.stringify(params), data);
       const movies = response.data;
@@ -118,12 +115,24 @@ export default class IndexServer {
   async getSimilarMovies(id, page, data) {
     try {
       const params = this.makeParams({
-        page : page,
-        confirm_exists : true
+        page
       });
       const response = await axios.get(BASE_API_URL + `/movie/${id}/similar?` + qs.stringify(params), data);
       const movies = response.data;
       return await IndexServer.loadMovies(movies);
+    }
+    catch (error) {
+      IndexServer.handleError(error);
+    }
+  }
+  async getEmbedURLs(url, data) {
+    try {
+      const params = this.makeParams({
+        url
+      });
+      const response = await axios.get(BASE_API_URL + `/embedURLs?` + qs.stringify(params), data);
+      const urls = response.data;
+      return urls;
     }
     catch (error) {
       IndexServer.handleError(error);

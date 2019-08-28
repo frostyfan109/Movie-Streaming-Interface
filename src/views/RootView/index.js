@@ -15,6 +15,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './RootView.css';
 
 class RootView extends Component {
+  constructor(props) {
+    super(props);
+
+    this._ref = React.createRef();
+  }
   componentDidMount() {
     if (!this.props.indexServersLoaded) {
       this.props.fetchIndexServers();
@@ -26,7 +31,7 @@ class RootView extends Component {
   }
   render() {
     return (
-      <div className={classNames("App", this.props.theme === Theme.LIGHT && "bg-light")}>
+      <div className={classNames("App", this.props.theme === Theme.LIGHT && "bg-light")} ref={this._ref}>
         <Router history={createBrowserHistory()}>
 
         <Helmet>
@@ -43,7 +48,7 @@ class RootView extends Component {
           </style>
         </Helmet>
 
-        <ScrollToTop/>
+        <ScrollToTop scrollToTop={() => this._ref.current.scrollTo(0, 0)}/>
 
         <Header/>
 

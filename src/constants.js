@@ -1,4 +1,4 @@
-export const WEBSITE_NAME = "Free Movie Streamer";
+export const WEBSITE_NAME = "Patkerflix";
 export const Theme = {
   LIGHT: "LIGHT",
   DARK: "DARK"
