@@ -181,7 +181,9 @@ class MovieView extends Component {
           <Plyr type="video"
                 url={!this.state.streamData.loading && this.state.streamData.data !== null ? this.state.streamData.data.stream_url : null}
                 ratio="16:9"
-                controls={[ 'play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen' ]}
+                controls={[ 'play-large', 'play', 'progress', 'current-time',
+                            'mute', 'volume', 'captions', 'settings', 'pip',
+                            'airplay', 'fullscreen' ]}
                 poster={movie.poster}/>
           {
             !this.state.streamData.loading && this.state.streamData.data !== null && this.state.streamData.data.notFound && (

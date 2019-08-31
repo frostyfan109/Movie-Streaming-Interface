@@ -1,0 +1,27 @@
+.Genres-view {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: .45rem;
+  grid-row-gap: .45rem;
+}
+
+@media (min-width: 576px) {
+  .Genres-view {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 768px) {
+  .Genres-view {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 992px) {
+  .Genres-view {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .Genres-view {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}

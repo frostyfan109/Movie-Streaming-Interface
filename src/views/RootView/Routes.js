@@ -16,7 +16,8 @@ class Routes extends Component {
         <Route path="/new" render={(props) => (
           <Views.ResultView tags={["New"]} movies={this.props.newMovies} setActiveMovieResultsPage={this.props.setNewMovies}/>
         )} />
-        <Route path="/genres" component={Views.GenreView} />
+        <Route path="/genres" component={Views.GenresView} />
+        <Route path="/genre/:id" component={Views.GenreView} />
         <Route path="/search/:query?" component={Views.SearchView} />
         <Route path="/settings" component={Views.SettingsView} />
 

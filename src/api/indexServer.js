@@ -51,7 +51,20 @@ export default class IndexServer {
       ...params
     };
   }
-  async getMovies(category, page, data) {
+  async getMoviesByGenre(genreId, page, data) {
+    try {
+      const params = this.makeParams({
+        page
+      });
+      const response = await axios.get(BASE_API_URL + `/genre/${genreId}?` + qs.stringify(params), data);
+      const movies = response.data;
+      return await IndexServer.loadMovies(movies);
+    }
+    catch (error) {
+      IndexServer.handleError(error);
+    }
+  }
+  async getMoviesByCategory(category, page, data) {
     try {
       const params = this.makeParams({
         category,
@@ -64,6 +77,10 @@ export default class IndexServer {
     catch (error) {
       IndexServer.handleError(error);
     }
+  }
+  getMovies(...args) {
+    // Alias
+    return this.getMoviesByCategory(...args);
   }
   async searchMovies(query, page, data) {
     if (!query) return await IndexServer.loadMovies([]);
